@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="360" viewBox="0 0 240 360">
+  <rect width="240" height="360" fill="#3f5c4b"/>
+  <rect width="18" height="360" fill="#27392e"/>
+  <text x="34" y="168" fill="#fff8f4" font-family="Georgia, serif" font-size="22">Евгений Онегин</text>
+  <text x="34" y="200" fill="#fff8f4" font-family="Georgia, serif" font-size="14">Александр Пушкин</text>
+</svg>
