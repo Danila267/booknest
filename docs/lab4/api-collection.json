@@ -1,0 +1,82 @@
+{
+  "info": {
+    "name": "BookNest Open Library",
+    "description": "Four Open Library requests for BookNest. No API key. sort=author is omitted because that value returns HTTP 500. A live search with subject=fiction and sort=title returned HTTP 200.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search classic literature",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://openlibrary.org/search.json?q=classic%20literature&limit=20&page=1&fields=key,title,author_name,first_publish_year,cover_i,ebook_access,subject&sort=title",
+          "protocol": "https",
+          "host": ["openlibrary", "org"],
+          "path": ["search.json"],
+          "query": [
+            { "key": "q", "value": "classic literature", "description": "Trimmed search, or classic literature when the box is empty." },
+            { "key": "limit", "value": "20" },
+            { "key": "page", "value": "1" },
+            { "key": "fields", "value": "key,title,author_name,first_publish_year,cover_i,ebook_access,subject" },
+            { "key": "sort", "value": "title", "description": "title-asc. Do not send sort=author." }
+          ]
+        },
+        "description": "Search classic literature, page 1, limit 20."
+      },
+      "response": []
+    },
+    {
+      "name": "Search with no docs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://openlibrary.org/search.json?q=booknest-no-matching-title-7f3a9c2e4b18d06a5c91&limit=20&page=1&fields=key,title,author_name,first_publish_year,cover_i,ebook_access,subject",
+          "protocol": "https",
+          "host": ["openlibrary", "org"],
+          "path": ["search.json"],
+          "query": [
+            { "key": "q", "value": "booknest-no-matching-title-7f3a9c2e4b18d06a5c91", "description": "A long unlikely string that returns no docs." },
+            { "key": "limit", "value": "20" },
+            { "key": "page", "value": "1" },
+            { "key": "fields", "value": "key,title,author_name,first_publish_year,cover_i,ebook_access,subject" }
+          ]
+        },
+        "description": "Search a query that returns no docs."
+      },
+      "response": []
+    },
+    {
+      "name": "GET /works/OL109524W.json",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://openlibrary.org/works/OL109524W.json",
+          "protocol": "https",
+          "host": ["openlibrary", "org"],
+          "path": ["works", "OL109524W.json"]
+        },
+        "description": "Solaris. Expected HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "GET /works/OL0W.json",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://openlibrary.org/works/OL0W.json",
+          "protocol": "https",
+          "host": ["openlibrary", "org"],
+          "path": ["works", "OL0W.json"]
+        },
+        "description": "Missing work. Expected HTTP 404."
+      },
+      "response": []
+    }
+  ]
+}
