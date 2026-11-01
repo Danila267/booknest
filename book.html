@@ -61,7 +61,103 @@
             <a class="button" href="loan.html">Оформить выдачу</a>
             <button class="button button--wish" type="button" aria-pressed="false" data-wish="master-i-margarita">Хочу прочитать</button>
           </p>
+          <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+            <h2 id="reviews-title">Отзывы</h2>
+            <article class="review">
+              <h3>Алина К.</h3>
+              <p class="review__meta">
+                <time datetime="2026-03-12">12 марта 2026</time>
+                <span class="badge">Оценка: 5 из 5</span>
+              </p>
+              <p>Обсуждение бала у Воланда заняло всю встречу. Удобно, что в экземпляре уже стоит закладка клуба на главе о рукописи.</p>
+            </article>
+            <article class="review">
+              <h3>Илья М.</h3>
+              <p class="review__meta">
+                <time datetime="2026-04-02">2 апреля 2026</time>
+                <span class="badge">Оценка: 4 из 5</span>
+              </p>
+              <p>Густая книга для одного вечера, зато к разговору о трусости и творчестве можно прийти подготовленным.</p>
+            </article>
+            <form class="review-form" id="review-form" action="#reviews" method="get">
+              <p class="field">
+                <label class="field__label" for="review-name">Имя</label>
+                <input class="field__control" id="review-name" name="reviewName" type="text" required maxlength="80" pattern="[A-Za-zА-Яа-яЁё \-']{2,80}" autocomplete="name">
+              </p>
+              <p class="field">
+                <label class="field__label" for="review-rating">Оценка</label>
+                <input class="field__control" id="review-rating" name="reviewRating" type="number" required min="1" max="5">
+              </p>
+              <p class="field">
+                <label class="field__label" for="review-text">Текст отзыва</label>
+                <textarea class="field__control" id="review-text" name="reviewText" required minlength="10" maxlength="500"></textarea>
+              </p>
+              <p class="review-form__actions">
+                <button class="button" type="submit">Опубликовать отзыв</button>
+              </p>
+            </form>
+            <p class="field__hint">Отзыв проверяется только браузером и никуда не отправляется.</p>
+          </section>
         </section>
+        <aside class="similar" aria-labelledby="similar-title">
+          <h2 id="similar-title">Похожие книги</h2>
+          <ul class="similar__list">
+            <li class="catalog__item">
+              <article class="card">
+                <figure class="card__cover">
+                  <img src="images/covers/prestuplenie-i-nakazanie.svg" alt="Обложка: Фёдор Достоевский, «Преступление и наказание»" width="240" height="360">
+                </figure>
+                <h3 class="card__title">Преступление и наказание</h3>
+                <p class="card__author">Фёдор Достоевский</p>
+                <p class="card__meta">
+                  <span class="badge">Роман</span>
+                  <time datetime="1866">1866</time>
+                </p>
+                <p class="badge badge--available">Доступна</p>
+                <p class="card__actions">
+                  <a class="button button--ghost" href="book.html?id=prestuplenie-i-nakazanie">Подробнее</a>
+                  <button class="button button--wish" type="button" aria-pressed="false" data-wish="prestuplenie-i-nakazanie">Хочу прочитать</button>
+                </p>
+              </article>
+            </li>
+            <li class="catalog__item">
+              <article class="card">
+                <figure class="card__cover">
+                  <img src="images/covers/evgeniy-onegin.svg" alt="Обложка: Александр Пушкин, «Евгений Онегин»" width="240" height="360">
+                </figure>
+                <h3 class="card__title">Евгений Онегин</h3>
+                <p class="card__author">Александр Пушкин</p>
+                <p class="card__meta">
+                  <span class="badge">Поэзия</span>
+                  <time datetime="1833">1833</time>
+                </p>
+                <p class="badge badge--unavailable">На руках</p>
+                <p class="card__actions">
+                  <a class="button button--ghost" href="book.html?id=evgeniy-onegin">Подробнее</a>
+                  <button class="button button--wish" type="button" aria-pressed="false" data-wish="evgeniy-onegin">Хочу прочитать</button>
+                </p>
+              </article>
+            </li>
+            <li class="catalog__item">
+              <article class="card">
+                <figure class="card__cover">
+                  <img src="images/covers/solaris.svg" alt="Обложка: Станислав Лем, «Солярис»" width="240" height="360">
+                </figure>
+                <h3 class="card__title">Солярис</h3>
+                <p class="card__author">Станислав Лем</p>
+                <p class="card__meta">
+                  <span class="badge">Фантастика</span>
+                  <time datetime="1961">1961</time>
+                </p>
+                <p class="badge badge--available">Доступна</p>
+                <p class="card__actions">
+                  <a class="button button--ghost" href="book.html?id=solaris">Подробнее</a>
+                  <button class="button button--wish" type="button" aria-pressed="false" data-wish="solaris">Хочу прочитать</button>
+                </p>
+              </article>
+            </li>
+          </ul>
+        </aside>
       </section>
     </article>
   </main>
