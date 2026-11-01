@@ -1,0 +1,210 @@
+.site-header,
+.site-footer {
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.site-footer {
+  border-bottom: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.site-header__brand {
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  text-decoration: none;
+}
+
+.site-header__role,
+.site-footer__meta,
+.card__author,
+.catalog__count,
+.field__hint,
+.lead {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.lead,
+.book__description {
+  max-width: var(--measure);
+  font-size: var(--text-md);
+}
+
+.site-nav__link {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.site-nav__link[aria-current="page"] {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.card,
+.review,
+.loan,
+.wishlist,
+.state {
+  padding: var(--space-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.card {
+  height: 100%;
+}
+
+.card__cover img,
+.book__cover img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-sm);
+}
+
+.book__cover {
+  width: min(100%, var(--track-min));
+}
+
+.card__actions {
+  margin-top: auto;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-muted);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+}
+
+.badge--available {
+  color: var(--color-available);
+}
+
+.badge--unavailable {
+  color: var(--color-unavailable);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  text-align: center;
+  cursor: pointer;
+}
+
+a.button {
+  text-decoration: none;
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-line);
+}
+
+.button--wish[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  border-color: transparent;
+}
+
+.button:disabled {
+  opacity: 0.55;
+}
+
+.field__control {
+  min-height: 2.75rem;
+  width: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+}
+
+.field--checkbox .field__control {
+  width: 1.25rem;
+  min-height: 1.25rem;
+}
+
+textarea.field__control {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.state--empty {
+  background: var(--color-bg-muted);
+  box-shadow: none;
+}
+
+.state--error {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  box-shadow: none;
+}
+
+.state--loading {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.spinner {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 3px solid var(--color-line);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: booknest-spin var(--duration) var(--ease) infinite;
+}
+
+@keyframes booknest-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.crumbs a {
+  color: var(--color-ink-muted);
+}
+
+.loan-figure img {
+  width: min(100%, 20rem);
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-sm);
+}
+
+.state[hidden],
+.catalog__books[hidden],
+.pagination[hidden],
+.wishlist__empty[hidden],
+.loan-note[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0s;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}

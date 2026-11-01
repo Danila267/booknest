@@ -1,0 +1,129 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  width: min(100% - 2 * var(--space-md), var(--content-max));
+  margin-inline: auto;
+  padding-block: var(--space-lg);
+}
+
+.page-intro,
+.filters,
+.club-facts,
+.layout-catalog,
+.layout-book,
+.layout-loan,
+.book__main,
+.field,
+.card,
+.review,
+.review-form,
+.loan,
+.loan-aside,
+.wishlist,
+.state {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.site-header,
+.site-footer {
+  padding: var(--space-md);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-md);
+}
+
+.site-nav__list,
+.crumbs__list,
+.pagination,
+.card__meta,
+.review__meta,
+.card__actions,
+.filters__actions,
+.loan-form__actions,
+.review-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.filters__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.field--checkbox,
+.wishlist__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.catalog__books,
+.similar__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--track-min)), 1fr));
+  gap: var(--space-md);
+}
+
+.catalog__item {
+  display: flex;
+}
+
+.card {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.specs,
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm) var(--space-lg);
+}
+
+.facts {
+  grid-template-columns: auto 1fr;
+}
+
+@media (min-width: 48rem) {
+  .filters__form {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .filters__form .field {
+    flex: 1 1 12rem;
+  }
+}
+
+@media (min-width: 90rem) {
+  .layout-catalog,
+  .layout-book,
+  .layout-loan {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(var(--track-min), var(--sidebar));
+    align-items: start;
+  }
+
+  .wishlist,
+  .similar,
+  .loan-aside {
+    position: sticky;
+    top: var(--header-offset);
+  }
+}
