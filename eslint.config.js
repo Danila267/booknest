@@ -12,6 +12,7 @@ const browserGlobals = {
   URL: "readonly",
   URLSearchParams: "readonly",
   console: "readonly",
+  DOMException: "readonly",
   document: "readonly",
   fetch: "readonly",
   localStorage: "readonly",
