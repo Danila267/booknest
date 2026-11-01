@@ -1,8 +1,9 @@
+import { describeError, searchBooks } from "./api/client.js";
 import { getBooks } from "./data/books.js";
 import {
   FILTER_DEFAULTS,
   addWish,
-  filterBooks,
+  applyAvailability,
   isWished,
   mergeWishlist,
   removeWish,
@@ -13,6 +14,10 @@ import { render } from "./ui/render.js";
 
 const FILTERS_KEY = "booknest.filters";
 const WISHLIST_KEY = "booknest.wishlist";
+const SEARCH_DELAY = 350;
+
+let searchTimer = 0;
+let activeController = null;
 
 const state = {
   books: [],
@@ -55,23 +60,58 @@ function loadStoredState() {
   const filters = sanitizeFilters(readStored(FILTERS_KEY));
   state.filters = { ...filters, page: 1 };
   state.wishlist = mergeWishlist(sanitizeWishlist(readStored(WISHLIST_KEY)), getBooks());
-  const visible = sortBooks(filterBooks(getBooks(), state.filters), state.filters.sort);
-  state.books = visible;
-  state.total = visible.length;
-  state.status = visible.length === 0 ? "empty" : "success";
+  state.books = [];
+  state.total = 0;
+  state.status = "success";
   state.errorMessage = "";
 }
 
-function publish() {
-  const visible = sortBooks(filterBooks(getBooks(), state.filters), state.filters.sort);
-  state.books = visible;
-  state.total = visible.length;
-  state.filters = { ...state.filters, page: 1 };
-  state.status = visible.length === 0 ? "empty" : "success";
-  state.errorMessage = "";
-  state.wishlist = mergeWishlist(state.wishlist, getBooks());
-  persist();
-  render(state);
+function isAbort(error) {
+  return Boolean(error) && typeof error === "object" && error.name === "AbortError";
+}
+
+function scheduleLoad() {
+  window.clearTimeout(searchTimer);
+  searchTimer = window.setTimeout(() => {
+    void loadCatalog();
+  }, SEARCH_DELAY);
+}
+
+function loadNow() {
+  window.clearTimeout(searchTimer);
+  void loadCatalog();
+}
+
+async function loadCatalog() {
+  const requestId = state.requestId + 1;
+  state.requestId = requestId;
+  if (activeController) activeController.abort();
+  activeController = new AbortController();
+  const signal = activeController.signal;
+  const filters = state.filters;
+
+  try {
+    const result = await searchBooks(filters, { signal });
+    if (state.requestId !== requestId || signal.aborted) return;
+
+    // Open Library rejects sort=author.
+    const sorted = filters.sort === "author-asc" ? sortBooks(result.items, "author-asc") : result.items.slice();
+    // Open Library does not provide a trustworthy shelf-availability query.
+    const visible = applyAvailability(sorted, filters.availableOnly);
+    state.books = visible;
+    state.total = result.total;
+    state.status = visible.length === 0 ? "empty" : "success";
+    state.errorMessage = "";
+    state.wishlist = mergeWishlist(state.wishlist, visible);
+    persist();
+    render(state);
+  } catch (error) {
+    if (isAbort(error) || signal.aborted || state.requestId !== requestId) return;
+    state.books = [];
+    state.status = "error";
+    state.errorMessage = describeError(error);
+    render(state);
+  }
 }
 
 function persist() {
@@ -83,17 +123,20 @@ function persist() {
   }
 }
 
+function bookById(id) {
+  return state.books.find((book) => book.id === id) ?? getBooks().find((book) => book.id === id);
+}
+
 function toggleWish(id) {
   if (isWished(state.wishlist, id)) {
     state.wishlist = removeWish(state.wishlist, id);
-    publish();
-    return;
+  } else {
+    const book = bookById(id);
+    if (!book) return;
+    state.wishlist = addWish(state.wishlist, book);
   }
-
-  const book = getBooks().find((item) => item.id === id);
-  if (!book) return;
-  state.wishlist = addWish(state.wishlist, book);
-  publish();
+  persist();
+  render(state);
 }
 
 function readForm(form) {
@@ -122,7 +165,8 @@ function handleClick(event) {
   const remove = target.closest("[data-action='remove-wish']");
   if (remove instanceof HTMLElement && remove.dataset.wish) {
     state.wishlist = removeWish(state.wishlist, remove.dataset.wish);
-    publish();
+    persist();
+    render(state);
     return;
   }
 
@@ -133,13 +177,13 @@ function handleClick(event) {
   }
 
   if (target.closest("[data-action='retry']")) {
-    publish();
+    loadNow();
     return;
   }
 
   if (target.closest("[data-action='page-prev']") || target.closest("[data-action='page-next']")) {
     state.filters = { ...state.filters, page: 1 };
-    publish();
+    loadNow();
   }
 }
 
@@ -148,7 +192,7 @@ function handleSubmit(event) {
   if (!(form instanceof HTMLFormElement) || form.id !== "filters-form") return;
   event.preventDefault();
   readForm(form);
-  publish();
+  loadNow();
 }
 
 function handleReset(event) {
@@ -156,14 +200,15 @@ function handleReset(event) {
   if (!(form instanceof HTMLFormElement) || form.id !== "filters-form") return;
   event.preventDefault();
   state.filters = { ...FILTER_DEFAULTS };
-  publish();
+  loadNow();
 }
 
 function handleInput(event) {
   const target = event.target;
   if (!(target instanceof HTMLInputElement) || target.name !== "search") return;
   state.filters = sanitizeFilters({ ...state.filters, search: target.value, page: 1 });
-  publish();
+  persist();
+  scheduleLoad();
 }
 
 function handleChange(event) {
@@ -173,11 +218,11 @@ function handleChange(event) {
   const form = target.closest("form");
   if (!(form instanceof HTMLFormElement)) return;
   readForm(form);
-  publish();
+  loadNow();
 }
 
 loadStoredState();
-publish();
+loadNow();
 
 for (const type of ["click", "submit", "reset", "input", "change"]) {
   document.addEventListener(type, onDocument);
