@@ -1,7 +1,10 @@
 import js from "@eslint/js";
+import reactHooks from "eslint-plugin-react-hooks";
+import tseslint from "typescript-eslint";
 
 const browserGlobals = {
   AbortController: "readonly",
+  DOMException: "readonly",
   Element: "readonly",
   FormData: "readonly",
   HTMLButtonElement: "readonly",
@@ -12,7 +15,6 @@ const browserGlobals = {
   URL: "readonly",
   URLSearchParams: "readonly",
   console: "readonly",
-  DOMException: "readonly",
   document: "readonly",
   fetch: "readonly",
   localStorage: "readonly",
@@ -20,13 +22,13 @@ const browserGlobals = {
   window: "readonly",
 };
 
-export default [
+export default tseslint.config(
   {
     ignores: ["dist/**", "docs/**", "node_modules/**"],
   },
-  js.configs.recommended,
   {
     files: ["**/*.js"],
+    extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
@@ -39,4 +41,19 @@ export default [
       "no-var": "error",
     },
   },
-];
+  ...tseslint.configs.recommended.map((config) => ({
+    ...config,
+    files: ["**/*.{ts,tsx}"],
+  })),
+  {
+    files: ["**/*.{ts,tsx}"],
+    plugins: {
+      "react-hooks": reactHooks,
+    },
+    rules: {
+      ...reactHooks.configs.flat.recommended.rules,
+      eqeqeq: "error",
+      "no-var": "error",
+    },
+  },
+);
