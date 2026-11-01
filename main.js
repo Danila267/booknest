@@ -6,6 +6,7 @@ import {
   sanitizeFilters,
   sortBooks,
 } from "./lib/books.js";
+import { render } from "./ui/render.js";
 
 const FILTERS_KEY = "booknest.filters";
 const WISHLIST_KEY = "booknest.wishlist";
@@ -58,4 +59,90 @@ function loadStoredState() {
   state.errorMessage = "";
 }
 
+function publish() {
+  const visible = sortBooks(filterBooks(getBooks(), state.filters), state.filters.sort);
+  state.books = visible;
+  state.total = visible.length;
+  state.filters = { ...state.filters, page: 1 };
+  state.status = visible.length === 0 ? "empty" : "success";
+  state.errorMessage = "";
+  state.wishlist = mergeWishlist(state.wishlist, getBooks());
+  render(state);
+}
+
+function readForm(form) {
+  const data = new FormData(form);
+  state.filters = sanitizeFilters({
+    search: String(data.get("search") ?? ""),
+    genre: String(data.get("genre") ?? "all"),
+    sort: String(data.get("sort") ?? "title-asc"),
+    availableOnly: data.get("available") === "1",
+    page: 1,
+  });
+}
+
+function onDocument(event) {
+  if (event.type === "click") handleClick(event);
+  if (event.type === "submit") handleSubmit(event);
+  if (event.type === "reset") handleReset(event);
+  if (event.type === "input") handleInput(event);
+  if (event.type === "change") handleChange(event);
+}
+
+function handleClick(event) {
+  const target = event.target instanceof Element ? event.target : null;
+  if (!target) return;
+
+  if (target.closest("[data-action='remove-wish']")) return;
+  if (target.closest("[data-wish]")) return;
+
+  if (target.closest("[data-action='retry']")) {
+    publish();
+    return;
+  }
+
+  if (target.closest("[data-action='page-prev']") || target.closest("[data-action='page-next']")) {
+    state.filters = { ...state.filters, page: 1 };
+    publish();
+  }
+}
+
+function handleSubmit(event) {
+  const form = event.target;
+  if (!(form instanceof HTMLFormElement) || form.id !== "filters-form") return;
+  event.preventDefault();
+  readForm(form);
+  publish();
+}
+
+function handleReset(event) {
+  const form = event.target;
+  if (!(form instanceof HTMLFormElement) || form.id !== "filters-form") return;
+  event.preventDefault();
+  state.filters = { ...FILTER_DEFAULTS };
+  publish();
+}
+
+function handleInput(event) {
+  const target = event.target;
+  if (!(target instanceof HTMLInputElement) || target.name !== "search") return;
+  state.filters = sanitizeFilters({ ...state.filters, search: target.value, page: 1 });
+  publish();
+}
+
+function handleChange(event) {
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+  if (target.id !== "genre" && target.id !== "sort" && target.id !== "available") return;
+  const form = target.closest("form");
+  if (!(form instanceof HTMLFormElement)) return;
+  readForm(form);
+  publish();
+}
+
 loadStoredState();
+publish();
+
+for (const type of ["click", "submit", "reset", "input", "change"]) {
+  document.addEventListener(type, onDocument);
+}
