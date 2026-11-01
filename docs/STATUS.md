@@ -2,7 +2,7 @@
 
 Playbook: ready on branch `docs/playbook`.
 Lab 1 is assembled on `lab-1/markup`. Lab 2 is assembled on `lab-2/styles`.
-Lab 3 was not assembled: `main.js` is absent.
+Lab 3 searches 40 local books on `lab-3/js-app`.
 
 | Phase | Branch | Depends on | Status |
 | --- | --- | --- | --- |
@@ -17,7 +17,7 @@ Lab 3 was not assembled: `main.js` is absent.
 | 04a API client | `lab-4/api-client` | playbook | pushed |
 | INT-1 Lab 1 | `lab-1/markup` | 01a, 01b, 01c | assembled; W3C errors 0; Lighthouse accessibility 96 |
 | INT-2 Lab 2 | `lab-2/styles` | INT-1, 02a, 02b, 02c | assembled; four stylesheets linked; screenshots in docs/lab2 |
-| 03c catalog behavior | `lab-3/js-app` | INT-2, 03a, 03b | not started |
+| 03c catalog behavior | `lab-3/js-app` | INT-2, 03a, 03b | assembled; 40 local books; eslint clean |
 | 04b API behavior | `lab-4/api` | 03c, 04a | not started |
 | 05s scaffold | `lab-5/react` | 04b | not started |
 | 05a UI kit | `lab-5/react-ui` | 05s | not started |
