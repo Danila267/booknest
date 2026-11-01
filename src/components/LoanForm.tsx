@@ -48,7 +48,7 @@ export function LoanForm({ onValid }: LoanFormProps) {
             name="readerPhone"
             type="tel"
             required
-            pattern={"\\+?[0-9\\-\\s()]{10,18}"}
+            pattern={"\\+?[0-9\\-\\s\\(\\)]{10,18}"}
             autoComplete="tel"
             aria-describedby="phone-hint"
           />
