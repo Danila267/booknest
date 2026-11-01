@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="360" viewBox="0 0 240 360">
+  <rect width="240" height="360" fill="#8a5a12"/>
+  <rect width="18" height="360" fill="#56380b"/>
+  <text x="34" y="144" fill="#fff8f4" font-family="Georgia, serif" font-size="18">
+    <tspan x="34" dy="0">Sapiens.</tspan>
+    <tspan x="34" dy="24">Краткая история</tspan>
+    <tspan x="34" dy="24">человечества</tspan>
+  </text>
+  <text x="34" y="224" fill="#fff8f4" font-family="Georgia, serif" font-size="14">Юваль Ной Харари</text>
+</svg>
