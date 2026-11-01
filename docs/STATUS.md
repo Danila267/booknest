@@ -14,7 +14,7 @@ Product code: not started. The current lab is Lab 1, and it should start only fr
 | 03a local data | `lab-3/js-data` | playbook | not started |
 | 03b pure library | `lab-3/js-lib` | playbook | not started |
 | 04a API client | `lab-4/api-client` | playbook | not started |
-| INT-1 Lab 1 | `lab-1/markup` | 01a, 01b, 01c | waiting |
+| INT-1 Lab 1 | `lab-1/markup` | 01a, 01b, 01c | assembled; W3C errors 0; Lighthouse accessibility 96 |
 | INT-2 Lab 2 | `lab-2/styles` | INT-1, 02a, 02b, 02c | waiting |
 | 03c catalog behavior | `lab-3/js-app` | INT-2, 03a, 03b | waiting |
 | 04b API behavior | `lab-4/api` | 03c, 04a | waiting |
