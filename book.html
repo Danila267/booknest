@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Мастер и Маргарита — BookNest</title>
+</head>
+<body data-page="book">
+  <a class="skip-link" href="#content">К содержанию</a>
+  <header class="site-header">
+    <a class="site-header__brand" href="index.html">BookNest</a>
+    <p class="site-header__role">Роль: читатель</p>
+    <nav class="site-nav" aria-label="Основное меню">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="index.html">Каталог</a></li>
+        <li><a class="site-nav__link" href="book.html" aria-current="page">Карточка книги</a></li>
+        <li><a class="site-nav__link" href="loan.html">Выдача</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="content" class="page">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <ol class="crumbs__list">
+        <li><a href="index.html">Каталог</a></li>
+        <li><a href="index.html">Роман</a></li>
+        <li aria-current="page">Мастер и Маргарита</li>
+      </ol>
+    </nav>
+    <article class="book">
+      <header>
+        <h1>Мастер и Маргарита</h1>
+        <p class="card__author">Михаил Булгаков</p>
+      </header>
+      <section class="layout-book">
+        <section class="book__main">
+          <figure class="book__cover card__cover">
+            <img src="images/covers/master-i-margarita.svg" alt="Обложка: Михаил Булгаков, «Мастер и Маргарита»" width="240" height="360">
+          </figure>
+          <section aria-labelledby="specs-title">
+            <h2 id="specs-title">Характеристики</h2>
+            <dl class="specs">
+              <dt>Автор</dt>
+              <dd>Михаил Булгаков</dd>
+              <dt>Жанр</dt>
+              <dd>Роман</dd>
+              <dt>Год</dt>
+              <dd><time datetime="1967">1967</time></dd>
+              <dt>Страниц</dt>
+              <dd>480</dd>
+              <dt>Язык экземпляра</dt>
+              <dd>Русский</dd>
+              <dt>Статус</dt>
+              <dd>Доступна</dd>
+            </dl>
+          </section>
+          <section aria-labelledby="description-title">
+            <h2 id="description-title">Описание</h2>
+            <p class="book__description">Клуб читает роман о визите Воланда в Москву и о рукописи Мастера. Экземпляр свободен и стоит на полке весеннего цикла.</p>
+          </section>
+          <p class="card__actions">
+            <a class="button" href="loan.html">Оформить выдачу</a>
+            <button class="button button--wish" type="button" aria-pressed="false" data-wish="master-i-margarita">Хочу прочитать</button>
+          </p>
+        </section>
+      </section>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p class="site-footer__note">BookNest — книжный клуб университета. Каталог для читателей и библиотекарей.</p>
+    <p class="site-footer__meta"><small>Учебный проект. Заявки и отзывы проверяются в браузере и никуда не отправляются.</small></p>
+  </footer>
+</body>
+</html>
