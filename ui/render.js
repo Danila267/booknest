@@ -1,4 +1,4 @@
-import { isWished } from "../lib/books.js";
+import { isWished, pageCount } from "../lib/books.js";
 
 const EMPTY_TEXT = "Измените запрос или сбросьте фильтры.";
 const EMPTY_PAGE_TEXT = "На этой странице нет подходящих книг. Перейдите дальше или сбросьте фильтры.";
@@ -14,7 +14,7 @@ export function render(state) {
   renderCount(state);
   renderStates(state);
   renderBooks(state);
-  renderPagination();
+  renderPagination(state);
   renderWishlist(state);
 }
 
@@ -70,15 +70,17 @@ function renderBooks(state) {
   list.replaceChildren(...state.books.map((book) => bookCard(book, state.wishlist)));
 }
 
-function renderPagination() {
+function renderPagination(state) {
+  const pages = pageCount(state.total);
+  const page = state.filters.page;
   const current = document.querySelector("[data-page-current]");
   const total = document.querySelector("[data-page-total]");
   const previous = document.querySelector("[data-action='page-prev']");
   const next = document.querySelector("[data-action='page-next']");
-  if (current) current.textContent = "1";
-  if (total) total.textContent = "1";
-  if (previous instanceof HTMLButtonElement) previous.disabled = true;
-  if (next instanceof HTMLButtonElement) next.disabled = true;
+  if (current) current.textContent = String(page);
+  if (total) total.textContent = String(pages);
+  if (previous instanceof HTMLButtonElement) previous.disabled = page <= 1;
+  if (next instanceof HTMLButtonElement) next.disabled = page >= pages;
 }
 
 function renderWishlist(state) {
