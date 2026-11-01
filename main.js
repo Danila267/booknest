@@ -90,6 +90,11 @@ async function loadCatalog() {
   const signal = activeController.signal;
   const filters = state.filters;
 
+  state.status = "loading";
+  state.errorMessage = "";
+  state.books = [];
+  render(state);
+
   try {
     const result = await searchBooks(filters, { signal });
     if (state.requestId !== requestId || signal.aborted) return;
@@ -102,14 +107,16 @@ async function loadCatalog() {
     state.total = result.total;
     state.status = visible.length === 0 ? "empty" : "success";
     state.errorMessage = "";
-    state.wishlist = mergeWishlist(state.wishlist, visible);
-    persist();
-    render(state);
+    state.wishlist = mergeWishlist(state.wishlist, result.items);
   } catch (error) {
     if (isAbort(error) || signal.aborted || state.requestId !== requestId) return;
     state.books = [];
     state.status = "error";
     state.errorMessage = describeError(error);
+  } finally {
+    if (state.requestId !== requestId || signal.aborted) return;
+    if (state.status === "loading") state.status = "error";
+    persist();
     render(state);
   }
 }
