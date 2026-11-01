@@ -1,8 +1,11 @@
 import { getBooks } from "./data/books.js";
 import {
   FILTER_DEFAULTS,
+  addWish,
   filterBooks,
+  isWished,
   mergeWishlist,
+  removeWish,
   sanitizeFilters,
   sortBooks,
 } from "./lib/books.js";
@@ -67,7 +70,30 @@ function publish() {
   state.status = visible.length === 0 ? "empty" : "success";
   state.errorMessage = "";
   state.wishlist = mergeWishlist(state.wishlist, getBooks());
+  persist();
   render(state);
+}
+
+function persist() {
+  try {
+    localStorage.setItem(FILTERS_KEY, JSON.stringify(state.filters));
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(state.wishlist));
+  } catch {
+    // A failed write keeps the in-memory state.
+  }
+}
+
+function toggleWish(id) {
+  if (isWished(state.wishlist, id)) {
+    state.wishlist = removeWish(state.wishlist, id);
+    publish();
+    return;
+  }
+
+  const book = getBooks().find((item) => item.id === id);
+  if (!book) return;
+  state.wishlist = addWish(state.wishlist, book);
+  publish();
 }
 
 function readForm(form) {
@@ -93,8 +119,18 @@ function handleClick(event) {
   const target = event.target instanceof Element ? event.target : null;
   if (!target) return;
 
-  if (target.closest("[data-action='remove-wish']")) return;
-  if (target.closest("[data-wish]")) return;
+  const remove = target.closest("[data-action='remove-wish']");
+  if (remove instanceof HTMLElement && remove.dataset.wish) {
+    state.wishlist = removeWish(state.wishlist, remove.dataset.wish);
+    publish();
+    return;
+  }
+
+  const wish = target.closest("[data-wish]");
+  if (wish instanceof HTMLElement && wish.dataset.wish) {
+    toggleWish(wish.dataset.wish);
+    return;
+  }
 
   if (target.closest("[data-action='retry']")) {
     publish();
