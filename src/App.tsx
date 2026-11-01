@@ -1,20 +1,44 @@
+import { useEffect, useState } from "react";
+import { BookPage } from "./components/BookPage";
+import { CatalogPage } from "./components/CatalogPage";
+import { LoanPage } from "./components/LoanPage";
+import { SiteFooter } from "./components/SiteFooter";
+import { SiteHeader } from "./components/SiteHeader";
+import { isWished } from "./lib/books";
+import { parseHash } from "./lib/routes";
+import { useWishlist } from "./lib/useWishlist";
+import type { Route } from "./types";
+
 export function App() {
+  const [route, setRoute] = useState<Route>(() => parseHash(window.location.hash));
+  const { wishlist, toggle, remove } = useWishlist();
+
+  useEffect(() => {
+    const onHashChange = () => setRoute(parseHash(window.location.hash));
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
   return (
     <>
       <a className="skip-link" href="#content">
         К содержанию
       </a>
+      <SiteHeader current={route.name} />
       <main id="content" className="page">
-        <h1>Каталог книжного клуба</h1>
+        {route.name === "catalog" ? (
+          <CatalogPage wishlist={wishlist} onToggleWish={toggle} onRemoveWish={remove} />
+        ) : null}
+        {route.name === "book" ? (
+          <BookPage
+            bookId={route.bookId}
+            wished={route.bookId ? isWished(wishlist, route.bookId) : false}
+            onToggleWish={toggle}
+          />
+        ) : null}
+        {route.name === "loan" ? <LoanPage /> : null}
       </main>
-      <footer className="site-footer">
-        <p className="site-footer__note">
-          BookNest — книжный клуб университета. Каталог для читателей и библиотекарей.
-        </p>
-        <p className="site-footer__meta">
-          <small>Учебный проект. Заявки и отзывы проверяются в браузере и никуда не отправляются.</small>
-        </p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }
