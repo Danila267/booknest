@@ -30,11 +30,7 @@ export function App() {
           <CatalogPage wishlist={wishlist} onToggleWish={toggle} onRemoveWish={remove} />
         ) : null}
         {route.name === "book" ? (
-          <BookPage
-            bookId={route.bookId}
-            wished={route.bookId ? isWished(wishlist, route.bookId) : false}
-            onToggleWish={toggle}
-          />
+          <BookPage bookId={route.bookId} isSaved={(id) => isWished(wishlist, id)} onToggleWish={toggle} />
         ) : null}
         {route.name === "loan" ? <LoanPage /> : null}
       </main>

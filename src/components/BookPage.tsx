@@ -3,7 +3,7 @@ import featured from "../../docs/contracts/featured-books.json";
 import { describeError, getWork } from "../api/client";
 import { catalogHash } from "../lib/routes";
 import type { Book, GenreLabel, Status } from "../types";
-import { Badge } from "./Badge";
+import { BookCard } from "./BookCard";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { Button } from "./Button";
 import { EmptyState } from "./EmptyState";
@@ -15,7 +15,7 @@ import { Spinner } from "./Spinner";
 
 interface BookPageProps {
   bookId?: string;
-  wished: boolean;
+  isSaved: (id: string) => boolean;
   onToggleWish: (book: Book) => void;
 }
 
@@ -27,7 +27,7 @@ const FEATURED_BOOK: Book = {
   cover: FEATURED_SOURCE?.cover ?? "images/covers/placeholder.svg", description: FEATURED_SOURCE?.description ?? "",
 };
 
-export function BookPage({ bookId, wished, onToggleWish }: BookPageProps) {
+export function BookPage({ bookId, isSaved, onToggleWish }: BookPageProps) {
   const remote = Boolean(bookId?.startsWith("/works/"));
   const notFound = Boolean(bookId) && bookId !== FEATURED_ID && !remote;
   const [loaded, setLoaded] = useState<Book | null>(null);
@@ -87,13 +87,13 @@ export function BookPage({ bookId, wished, onToggleWish }: BookPageProps) {
         {status === "error" ? (
           <ErrorBox title="Не удалось загрузить каталог" message={message} onRetry={() => setAttempt((value) => value + 1)} />
         ) : null}
-        {status === "success" && book ? <BookBody book={book} wished={wished} onToggleWish={onToggleWish} /> : null}
+        {status === "success" && book ? <BookBody book={book} isSaved={isSaved} onToggleWish={onToggleWish} /> : null}
       </article>
     </>
   );
 }
 
-function BookBody({ book, wished, onToggleWish }: { book: Book; wished: boolean; onToggleWish: (book: Book) => void }) {
+function BookBody({ book, isSaved, onToggleWish }: { book: Book; isSaved: (id: string) => boolean; onToggleWish: (book: Book) => void }) {
   const similar = featured.books.filter((item) => featured.similarIds.includes(item.id) && item.id !== book.id).slice(0, 3);
   return (
     <section className="layout-book">
@@ -115,8 +115,8 @@ function BookBody({ book, wished, onToggleWish }: { book: Book; wished: boolean;
         </section>
         <p className="card__actions">
           <Button href="#/loan">Оформить выдачу</Button>
-          <Button wish pressed={wished} onClick={() => onToggleWish(book)}>
-            {wished ? "В списке" : "Хочу прочитать"}
+          <Button wish pressed={isSaved(book.id)} onClick={() => onToggleWish(book)}>
+            {isSaved(book.id) ? "В списке" : "Хочу прочитать"}
           </Button>
         </p>
         <ReviewList />
@@ -127,20 +127,20 @@ function BookBody({ book, wished, onToggleWish }: { book: Book; wished: boolean;
         <ul className="similar__list">
           {similar.map((item) => (
             <li className="catalog__item" key={item.id}>
-              <article className="card">
-                <h3 className="card__title">{item.title}</h3>
-                <p className="card__author">{item.author}</p>
-                <Badge tone="neutral">{item.genre}</Badge>
-                <p className="card__actions">
-                  <Button ghost href={`#/book/${encodeURIComponent(item.id)}`}>Подробнее</Button>
-                </p>
-              </article>
+              <BookCard book={asBook(item)} pressed={isSaved(item.id)} onToggle={onToggleWish} />
             </li>
           ))}
         </ul>
       </aside>
     </section>
   );
+}
+
+function asBook(item: (typeof featured.books)[number]): Book {
+  return {
+    id: item.id, title: item.title, author: item.author, genre: asGenre(item.genre),
+    year: item.year, available: item.available, cover: item.cover, description: item.description,
+  };
 }
 
 function asGenre(value: string): GenreLabel {
