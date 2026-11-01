@@ -1,0 +1,110 @@
+{
+  "detailId": "master-i-margarita",
+  "similarIds": [
+    "prestuplenie-i-nakazanie",
+    "evgeniy-onegin",
+    "solaris"
+  ],
+  "books": [
+    {
+      "id": "evgeniy-onegin",
+      "title": "Евгений Онегин",
+      "author": "Александр Пушкин",
+      "genre": "Поэзия",
+      "year": 1833,
+      "available": false,
+      "pages": 240,
+      "language": "Русский",
+      "cover": "images/covers/evgeniy-onegin.svg",
+      "coverColor": "#3f5c4b",
+      "alt": "Обложка: Александр Пушкин, «Евгений Онегин»",
+      "description": "Роман в стихах, который клуб читает вслух короткими главами. Этот экземпляр сейчас на руках до конца месяца."
+    },
+    {
+      "id": "master-i-margarita",
+      "title": "Мастер и Маргарита",
+      "author": "Михаил Булгаков",
+      "genre": "Роман",
+      "year": 1967,
+      "available": true,
+      "pages": 480,
+      "language": "Русский",
+      "cover": "images/covers/master-i-margarita.svg",
+      "coverColor": "#7a2e22",
+      "alt": "Обложка: Михаил Булгаков, «Мастер и Маргарита»",
+      "description": "Клуб читает роман о визите Воланда в Москву и о рукописи Мастера. Экземпляр свободен и стоит на полке весеннего цикла."
+    },
+    {
+      "id": "prestuplenie-i-nakazanie",
+      "title": "Преступление и наказание",
+      "author": "Фёдор Достоевский",
+      "genre": "Роман",
+      "year": 1866,
+      "available": true,
+      "pages": 670,
+      "language": "Русский",
+      "cover": "images/covers/prestuplenie-i-nakazanie.svg",
+      "coverColor": "#7a2e22",
+      "alt": "Обложка: Фёдор Достоевский, «Преступление и наказание»",
+      "description": "История Родиона Раскольникова для медленного чтения по частям. Экземпляр свободен, в нём закладки прошлых обсуждений."
+    },
+    {
+      "id": "priklyucheniya-sherloka-holmsa",
+      "title": "Приключения Шерлока Холмса",
+      "author": "Артур Конан Дойл",
+      "genre": "Детектив",
+      "year": 1892,
+      "available": true,
+      "pages": 320,
+      "language": "Русский",
+      "cover": "images/covers/priklyucheniya-sherloka-holmsa.svg",
+      "coverColor": "#3d342e",
+      "alt": "Обложка: Артур Конан Дойл, «Приключения Шерлока Холмса»",
+      "description": "Сборник рассказов для детективного цикла клуба. Экземпляр свободен и рассчитан на чтение по одному рассказу за встречу."
+    },
+    {
+      "id": "solaris",
+      "title": "Солярис",
+      "author": "Станислав Лем",
+      "genre": "Фантастика",
+      "year": 1961,
+      "available": true,
+      "pages": 320,
+      "language": "Русский",
+      "cover": "images/covers/solaris.svg",
+      "coverColor": "#1e4d8c",
+      "alt": "Обложка: Станислав Лем, «Солярис»",
+      "description": "Контакт с разумным океаном на далёкой станции. Клубный экземпляр на русском языке свободен."
+    },
+    {
+      "id": "sapiens",
+      "title": "Sapiens. Краткая история человечества",
+      "author": "Юваль Ной Харари",
+      "genre": "Нон-фикшн",
+      "year": 2011,
+      "available": false,
+      "pages": 512,
+      "language": "Русский",
+      "cover": "images/covers/sapiens.svg",
+      "coverColor": "#8a5a12",
+      "alt": "Обложка: Юваль Ной Харари, «Sapiens. Краткая история человечества»",
+      "description": "Обзор истории человека от древних обществ до современности. Экземпляр сейчас на руках у участника нон-фикшн группы."
+    }
+  ],
+  "reviews": [
+    {
+      "author": "Алина К.",
+      "date": "2026-03-12",
+      "dateLabel": "12 марта 2026",
+      "rating": 5,
+      "text": "Обсуждение бала у Воланда заняло всю встречу. Удобно, что в экземпляре уже стоит закладка клуба на главе о рукописи."
+    },
+    {
+      "author": "Илья М.",
+      "date": "2026-04-02",
+      "dateLabel": "2 апреля 2026",
+      "rating": 4,
+      "text": "Густая книга для одного вечера, зато к разговору о трусости и творчестве можно прийти подготовленным."
+    }
+  ]
+}
