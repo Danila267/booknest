@@ -5,6 +5,7 @@ import {
   addWish,
   applyAvailability,
   isWished,
+  pageCount,
   mergeWishlist,
   removeWish,
   sanitizeFilters,
@@ -58,7 +59,7 @@ function sanitizeWishlist(value) {
 
 function loadStoredState() {
   const filters = sanitizeFilters(readStored(FILTERS_KEY));
-  state.filters = { ...filters, page: 1 };
+  state.filters = filters;
   state.wishlist = mergeWishlist(sanitizeWishlist(readStored(WISHLIST_KEY)), getBooks());
   state.books = [];
   state.total = 0;
@@ -188,8 +189,16 @@ function handleClick(event) {
     return;
   }
 
-  if (target.closest("[data-action='page-prev']") || target.closest("[data-action='page-next']")) {
-    state.filters = { ...state.filters, page: 1 };
+  const previous = target.closest("[data-action='page-prev']");
+  if (previous instanceof HTMLButtonElement && !previous.disabled) {
+    state.filters = { ...state.filters, page: Math.max(1, state.filters.page - 1) };
+    loadNow();
+    return;
+  }
+
+  const next = target.closest("[data-action='page-next']");
+  if (next instanceof HTMLButtonElement && !next.disabled && state.filters.page < pageCount(state.total)) {
+    state.filters = { ...state.filters, page: state.filters.page + 1 };
     loadNow();
   }
 }
