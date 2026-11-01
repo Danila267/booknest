@@ -43,6 +43,7 @@ git worktree add -b lab-4/api-client     ../booknest-worktrees/04a docs/playbook
 | `05d-book.md` | `../booknest-worktrees/05d` | same base as 05c |
 | `05e-loan.md` | `../booknest-worktrees/05e` | same base as 05c |
 | `05f-shell.md` | `../booknest-worktrees/lab5` | 05c, 05d, 05e merged |
+| `INT-assemble.md` | основная папка `booknest` | после срезов, которые уже есть |
 
 Integration worktrees are created in those briefs, from the official previous lab branch, not all from the playbook.
 
