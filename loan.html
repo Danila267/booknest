@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Заявка на выдачу — BookNest</title>
+</head>
+<body data-page="loan">
+  <a class="skip-link" href="#content">К содержанию</a>
+  <header class="site-header">
+    <a class="site-header__brand" href="index.html">BookNest</a>
+    <p class="site-header__role">Роль: читатель</p>
+    <nav class="site-nav" aria-label="Основное меню">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="index.html">Каталог</a></li>
+        <li><a class="site-nav__link" href="book.html">Карточка книги</a></li>
+        <li><a class="site-nav__link" href="loan.html" aria-current="page">Выдача</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="content" class="page">
+    <header class="page-intro">
+      <h1>Заявка на выдачу</h1>
+      <p class="lead">Заполните анкету. В настоящем клубе её подтвердил бы библиотекарь. Этот учебный макет никуда её не отправляет.</p>
+    </header>
+    <section class="layout-loan">
+      <article class="loan">
+        <h2>Анкета</h2>
+        <form class="loan-form" id="loan-form" action="#loan-aside" method="get">
+          <fieldset>
+            <legend>Читатель</legend>
+            <p class="field">
+              <label class="field__label" for="reader-name">Имя</label>
+              <input class="field__control" id="reader-name" name="readerName" type="text" required maxlength="80" pattern="[A-Za-zА-Яа-яЁё \-']{2,80}" autocomplete="name">
+            </p>
+            <p class="field">
+              <label class="field__label" for="reader-email">Электронная почта</label>
+              <input class="field__control" id="reader-email" name="readerEmail" type="email" required maxlength="80" autocomplete="email">
+            </p>
+            <p class="field">
+              <label class="field__label" for="reader-phone">Телефон</label>
+              <input class="field__control" id="reader-phone" name="readerPhone" type="tel" required pattern="\+?[0-9\-\s\(\)]{10,18}" autocomplete="tel" aria-describedby="phone-hint">
+            </p>
+            <p class="field__hint" id="phone-hint">Для связи библиотекаря, например +7 900 000-00-00.</p>
+          </fieldset>
+          <fieldset>
+            <legend>Книга и срок</legend>
+            <p class="field">
+              <label class="field__label" for="loan-book">Книга</label>
+              <select class="field__control" id="loan-book" name="loanBook" required>
+                <option value="">Выберите книгу</option>
+                <option value="evgeniy-onegin">Евгений Онегин</option>
+                <option value="master-i-margarita">Мастер и Маргарита</option>
+                <option value="prestuplenie-i-nakazanie">Преступление и наказание</option>
+                <option value="priklyucheniya-sherloka-holmsa">Приключения Шерлока Холмса</option>
+                <option value="solaris">Солярис</option>
+                <option value="sapiens">Sapiens. Краткая история человечества</option>
+              </select>
+            </p>
+            <p class="field">
+              <label class="field__label" for="loan-date">Дата выдачи</label>
+              <input class="field__control" id="loan-date" name="loanDate" type="date" required min="2026-01-01" max="2027-12-31">
+            </p>
+            <p class="field">
+              <label class="field__label" for="loan-days">Дней на руках</label>
+              <input class="field__control" id="loan-days" name="loanDays" type="number" required min="1" max="30" value="14">
+            </p>
+          </fieldset>
+          <fieldset>
+            <legend>Подтверждение</legend>
+            <p class="field">
+              <label class="field__label" for="loan-comment">Комментарий</label>
+              <textarea class="field__control" id="loan-comment" name="loanComment" maxlength="400" aria-describedby="comment-hint"></textarea>
+            </p>
+            <p class="field__hint" id="comment-hint">Необязательно. Например, удобное время, когда забрать книгу.</p>
+            <p class="field field--checkbox">
+              <input class="field__control" id="loan-agree" name="loanAgree" type="checkbox" value="yes" required>
+              <label class="field__label" for="loan-agree">Понимаю, что это учебная форма и она никуда не отправляется.</label>
+            </p>
+          </fieldset>
+          <p class="loan-form__actions">
+            <button class="button" type="submit">Отправить заявку</button>
+            <button class="button button--ghost" type="reset">Очистить</button>
+          </p>
+        </form>
+        <p class="loan-note" id="loan-note" hidden>Заявка проверена в браузере и никуда не отправлена.</p>
+      </article>
+      <aside class="loan-aside" id="loan-aside">
+        <h2>Для библиотекаря</h2>
+        <figure class="loan-figure">
+          <img src="images/library-card.svg" width="320" height="200" alt="Макет читательского билета BookNest: имя читателя и срок выдачи 14 дней">
+          <figcaption>Макет билета. Клуб не выпускает настоящие билеты в этом проекте.</figcaption>
+        </figure>
+        <dl class="facts">
+          <dt>Срок</dt>
+          <dd><time datetime="P14D">14 дней</time></dd>
+          <dt>Кто подтверждает</dt>
+          <dd>Библиотекарь клуба</dd>
+          <dt>Где</dt>
+          <dd>Читальный зал, учебный макет</dd>
+        </dl>
+      </aside>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p class="site-footer__note">BookNest — книжный клуб университета. Каталог для читателей и библиотекарей.</p>
+    <p class="site-footer__meta"><small>Учебный проект. Заявки и отзывы проверяются в браузере и никуда не отправляются.</small></p>
+  </footer>
+</body>
+</html>
